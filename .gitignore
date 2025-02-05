@@ -1,0 +1,32 @@
+# Fichiers de configuration
+/includes/config.php
+
+# Dossier de données
+/data/*
+!/data/quizzes/
+!/data/users/
+/data/quizzes/*
+/data/users/*
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers d'environnement
+.env
+.env.local
+
+# Dossiers et fichiers de l'éditeur
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dépendances
+/vendor/
+/node_modules/
+
+# Fichiers de log
+*.log
+error_log
+access_log
