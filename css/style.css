@@ -1,3 +1,5 @@
+/* Test CSS Update - 2025-02-05 19:37 */
+
 :root {
     --primary-color: #4A90E2;
     --secondary-color: #F5A623;
@@ -45,14 +47,78 @@ body {
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--primary-color);
+    font-family: 'Arial Black', sans-serif;
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9d56e);
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientAnimation 10s ease infinite;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.logo::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    color: transparent;
 }
 
 .logo a {
     text-decoration: none;
-    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-q { color: #9370DB; }
+.logo-u { color: #FF0000; }
+.logo-i { color: #FF0000; }
+.logo-z { color: #FF0000; }
+.logo-e { color: #FF0000; }
+.logo-o { color: #FFD700; }
+
+.logo span {
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.logo-text span {
+    display: inline-block;
+    position: relative;
+    padding: 0 2px;
+}
+
+.logo-text span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+    background-size: 4px 4px;
+    background-position: center;
+    opacity: 0.5;
 }
 
 .nav-links {
@@ -404,6 +470,7 @@ main {
     border: 1px solid #ddd;
     border-radius: 4px;
     background: #f8f9fa;
+    font-size: 14px;
 }
 
 /* Quiz Page Styles */
@@ -1090,4 +1157,15 @@ main {
     .quiz-actions {
         flex-direction: column;
     }
+}
+
+/* EMERGENCY CSS VERIFICATION */
+body {
+    background-color: red !important;
+    color: white !important;
+}
+
+.logo {
+    background-color: green !important;
+    padding: 20px !important;
 }

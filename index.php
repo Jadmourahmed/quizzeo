@@ -43,7 +43,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_link'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizzeo - Plateforme de Quiz en Ligne</title>
-    <link rel="stylesheet" href="/projetweb_php/css/style.css">
+    <?php 
+    // Extensive debugging
+    $debug_info = [
+        'SERVER_DOCUMENT_ROOT' => $_SERVER['DOCUMENT_ROOT'],
+        'SCRIPT_FILENAME' => $_SERVER['SCRIPT_FILENAME'],
+        'PHP_SELF' => $_SERVER['PHP_SELF'],
+        'REQUEST_URI' => $_SERVER['REQUEST_URI'],
+        'CURRENT_DIR' => __DIR__,
+        'CURRENT_FILE' => __FILE__,
+        'CSS_FILE_EXISTS' => file_exists(__DIR__ . '/css/style.css') ? 'Yes' : 'No',
+        'CSS_FILE_READABLE' => is_readable(__DIR__ . '/css/style.css') ? 'Yes' : 'No'
+    ];
+
+    echo "<!-- PHP Debug Info:\n";
+    foreach ($debug_info as $key => $value) {
+        echo "$key: $value\n";
+    }
+    echo "-->\n";
+    ?>
+    
+    <link rel="stylesheet" href="/projetweb_php/css/style.css?v=<?php echo filemtime(__DIR__ . '/css/style.css'); ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
