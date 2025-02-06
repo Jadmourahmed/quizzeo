@@ -1,5 +1,6 @@
 <?php
-require_once 'includes/config.php';
+$project_root = dirname(__FILE__);
+require_once $project_root . '/includes/config.php';
 
 function checkAndCreateDirectory($path) {
     if (!file_exists($path)) {

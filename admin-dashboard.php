@@ -1,7 +1,9 @@
 <?php
 session_start();
-require_once 'includes/config.php';
-require_once 'includes/functions.php';
+$project_root = dirname(__FILE__);
+require_once $project_root . '/includes/config.php';
+$project_root = dirname(__FILE__);
+require_once $project_root . '/includes/functions.php';
 
 // Ensure only admin can access this page
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {

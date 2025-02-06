@@ -1,7 +1,8 @@
 <?php
-session_start();
-require_once 'includes/config.php';
-require_once 'includes/functions.php';
+// Determine the absolute path to the project root
+$project_root = dirname(__FILE__);
+require_once $project_root . '/includes/config.php';
+require_once $project_root . '/includes/functions.php';
 
 // Vérifier si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {

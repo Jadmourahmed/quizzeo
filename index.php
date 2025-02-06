@@ -1,7 +1,9 @@
 <?php
+// Determine the absolute path to the project root
+$project_root = dirname(__FILE__);
 session_start();
-require_once 'includes/config.php';
-require_once 'includes/functions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/projetweb_php/includes/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/projetweb_php/includes/functions.php';
 
 // Redirect to login if not authenticated
 if (!isset($_SESSION['user_id'])) {
