@@ -75,10 +75,15 @@ $_SESSION['captcha_answer'] = $num1 + $num2;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Quizzeo</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/projetweb_php/css/style.css?v=<?php echo uniqid(); ?>">
 </head>
 <body class="auth-page">
     <div class="auth-container">
+        <div class="logo">
+            <a href="/projetweb_php/index.php" class="logo-text">
+                <span class="logo-q">Q</span><span class="logo-u">U</span><span class="logo-i">I</span><span class="logo-z">ZZE</span><span class="logo-o">O</span>
+            </a>
+        </div>
         <div class="auth-box">
             <h1>Créer un compte Quizzeo</h1>
             

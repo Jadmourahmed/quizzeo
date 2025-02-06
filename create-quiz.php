@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (empty($error)) {
             // Créer le quiz
+            error_log("Show right answers: " . (isset($_POST['show_right_answers']) ? 'Yes' : 'No'));
             $quiz_data = [
                 'id' => uniqid(),
                 'title' => $title,
@@ -81,7 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'created_at' => date('Y-m-d H:i:s'),
                 'status' => 'en_cours',
                 'questions' => $questions,
-                'responses' => []
+                'responses' => [],
+                'show_right_answers' => filter_input(INPUT_POST, 'show_right_answers', FILTER_VALIDATE_BOOLEAN)
             ];
             
             // Sauvegarder le quiz
@@ -106,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créer un Quiz - Quizzeo</title>
-    <link rel="stylesheet" href="/projetweb_php/css/style.css">
+    <link rel="stylesheet" href="/projetweb_php/css/style.css?v=<?php echo uniqid(); ?>">
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
@@ -136,6 +138,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="description">Description</label>
                     <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="show_right_answers">
+                        <input type="checkbox" id="show_right_answers" name="show_right_answers" value="1">
+                        Afficher les réponses correctes après le quiz
+                    </label>
                 </div>
                 
                 <div id="questions">

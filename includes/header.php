@@ -2,14 +2,8 @@
     <div class="container">
         <nav class="nav-menu">
             <div class="logo">
-                <a href="/projetweb_php/index.php" class="logo" data-text="QUIZZEO">
-                    <span class="logo-q">Q</span>
-                    <span class="logo-u">U</span>
-                    <span class="logo-i">I</span>
-                    <span class="logo-z">Z</span>
-                    <span class="logo-z">Z</span>
-                    <span class="logo-e">E</span>
-                    <span class="logo-o">O</span>
+                <a href="/projetweb_php/index.php" class="logo-text">
+                    <span class="logo-q">Q</span><span class="logo-u">U</span><span class="logo-i">I</span><span class="logo-z">ZZE</span><span class="logo-o">O</span>
                 </a>
             </div>
             <?php if (isset($_SESSION['user_id'])): ?>

@@ -49,7 +49,7 @@ if ($_SESSION['role'] === 'utilisateur') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Résultats - <?php echo htmlspecialchars($quiz['title']); ?> - Quizzeo</title>
-    <link rel="stylesheet" href="/projetweb_php/css/style.css">
+    <link rel="stylesheet" href="/projetweb_php/css/style.css?v=<?php echo uniqid(); ?>"><?php // Consistent CSS link with unique identifier ?>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
@@ -84,6 +84,14 @@ if ($_SESSION['role'] === 'utilisateur') {
                                     <h3>Question <?php echo $index + 1; ?></h3>
                                     <p class="question-text"><?php echo htmlspecialchars($answer['question_text']); ?></p>
                                     
+                                    <?php 
+                                    // Comprehensive debugging for right answers
+                                    error_log("Quiz data: " . print_r($quiz, true));
+                                    
+                                    // Check if right answers should be shown
+                                    $show_right_answers = isset($quiz['show_right_answers']) ? (bool)$quiz['show_right_answers'] : false;
+                                    error_log("Show right answers: " . ($show_right_answers ? 'Yes' : 'No'));
+                                    ?>
                                     <div class="answer-details">
                                         <p class="user-answer">
                                             <strong>Votre réponse :</strong>
@@ -99,6 +107,7 @@ if ($_SESSION['role'] === 'utilisateur') {
                                             ?>
                                         </p>
                                         
+                                        <?php if ($show_right_answers): ?>
                                         <p class="correct-answer">
                                             <strong>Bonne(s) réponse(s) :</strong>
                                             <?php
@@ -112,6 +121,9 @@ if ($_SESSION['role'] === 'utilisateur') {
                                             }
                                             ?>
                                         </p>
+                                        <?php else: ?>
+                                            <?php error_log("Right answers hidden for this quiz"); ?>
+                                        <?php endif; ?>
                                         
                                         <p class="points">
                                             Points : <?php echo $answer['score']; ?>/<?php echo $answer['max_points']; ?>

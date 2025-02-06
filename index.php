@@ -52,8 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_link'])) {
         'REQUEST_URI' => $_SERVER['REQUEST_URI'],
         'CURRENT_DIR' => __DIR__,
         'CURRENT_FILE' => __FILE__,
-        'CSS_FILE_EXISTS' => file_exists(__DIR__ . '/css/style.css') ? 'Yes' : 'No',
-        'CSS_FILE_READABLE' => is_readable(__DIR__ . '/css/style.css') ? 'Yes' : 'No'
+        'ABSOLUTE_CSS_PATH' => realpath(__DIR__ . '/css/style.css')
     ];
 
     echo "<!-- PHP Debug Info:\n";
@@ -61,10 +60,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_link'])) {
         echo "$key: $value\n";
     }
     echo "-->\n";
+
+    // Check CSS file existence
+    $css_paths = [
+        'absolute' => '/projetweb_php/css/style.css',
+        'relative' => 'css/style.css',
+        'full_absolute' => $_SERVER['DOCUMENT_ROOT'] . '/projetweb_php/css/style.css',
+        'full_relative' => $_SERVER['DOCUMENT_ROOT'] . '/projetweb_php/css/style.css',
+        'realpath' => realpath(__DIR__ . '/css/style.css')
+    ];
+
+    echo "<!-- CSS File Checks:\n";
+    foreach ($css_paths as $type => $path) {
+        $exists = file_exists($path);
+        $readable = is_readable($path);
+        echo "$type: Exists=" . ($exists ? 'Yes' : 'No') . ", Readable=" . ($readable ? 'Yes' : 'No') . "\n";
+    }
+    echo "-->\n";
     ?>
     
-    <link rel="stylesheet" href="/projetweb_php/css/style.css?v=<?php echo filemtime(__DIR__ . '/css/style.css'); ?>">
+    <!-- Multiple CSS loading strategies -->
+    <link rel="stylesheet" href="css/style.css?v=<?php echo uniqid(); ?>"><?php // Unique identifier to bypass cache ?>
+    <link rel="stylesheet" href="/projetweb_php/css/style.css?debug=2">
+    <link rel="stylesheet" href="css/style.css?debug=3">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Emergency inline styles */
+        body { background-color: red !important; color: white !important; }
+        .logo { 
+            border: none !important; 
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>

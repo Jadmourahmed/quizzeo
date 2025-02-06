@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon Profil - Quizzeo</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/projetweb_php/css/style.css?v=<?php echo uniqid(); ?>"><?php // Consistent CSS link with unique identifier ?>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>

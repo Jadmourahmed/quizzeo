@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['answers'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($quiz['title']); ?> - Quizzeo</title>
-    <link rel="stylesheet" href="/projetweb_php/css/style.css">
+    <link rel="stylesheet" href="/projetweb_php/css/style.css?v=<?php echo uniqid(); ?>"><?php // Consistent CSS link with unique identifier ?>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
@@ -137,6 +137,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['answers'])) {
             
             <?php if (!empty($error)): ?>
                 <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
+            <?php endif; ?>
+            
+            <?php if (isset($quiz['show_right_answers']) && $quiz['show_right_answers']): ?>
+                <div class="quiz-info-note">
+                    <p>📝 Note : Les réponses correctes seront affichées après le quiz.</p>
+                </div>
             <?php endif; ?>
             
             <?php if ($_SESSION['role'] === 'utilisateur' && !isset($_SESSION['quiz_user'])): ?>
