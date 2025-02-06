@@ -22,9 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             foreach ($files as $file) {
                 $user_data = json_decode(file_get_contents($file), true);
                 if ($user_data && $user_data['email'] === $email) {
-                    // Debug logging
-                    error_log("Login attempt for email: $email");
-                    error_log("User data: " . print_r($user_data, true));
                     
                     if (password_verify($password, $user_data['password'])) {
                         if (isset($user_data['active']) && $user_data['active'] === false) {

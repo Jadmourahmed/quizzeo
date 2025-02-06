@@ -32,12 +32,17 @@ if ($_SESSION['role'] === 'utilisateur') {
     }
     $responses = array_values($user_responses);
 } elseif (in_array($_SESSION['role'], ['ecole', 'entreprise'])) {
-    // Les créateurs peuvent voir tous les résultats
+    // Les créateurs peuvent voir tous les résultats, y compris les réponses supprimées
     if ($quiz['creator_id'] !== $_SESSION['user_id']) {
         header('Location: /projetweb_php/index.php');
         exit();
     }
+    
+    // Combiner les réponses actuelles et les réponses supprimées
     $responses = $quiz['responses'];
+    if (isset($quiz['deleted_user_responses'])) {
+        $responses = array_merge($responses, $quiz['deleted_user_responses']);
+    }
 } else {
     header('Location: /projetweb_php/index.php');
     exit();
@@ -85,12 +90,8 @@ if ($_SESSION['role'] === 'utilisateur') {
                                     <p class="question-text"><?php echo htmlspecialchars($answer['question_text']); ?></p>
                                     
                                     <?php 
-                                    // Comprehensive debugging for right answers
-                                    error_log("Quiz data: " . print_r($quiz, true));
-                                    
                                     // Check if right answers should be shown
                                     $show_right_answers = isset($quiz['show_right_answers']) ? (bool)$quiz['show_right_answers'] : false;
-                                    error_log("Show right answers: " . ($show_right_answers ? 'Yes' : 'No'));
                                     ?>
                                     <div class="answer-details">
                                         <p class="user-answer">
@@ -137,11 +138,17 @@ if ($_SESSION['role'] === 'utilisateur') {
                     <!-- Affichage des résultats pour les écoles et entreprises -->
                     <div class="results-summary">
                         <h2>Résumé des résultats</h2>
-                        <p>Nombre total de participants : <?php echo count($responses); ?></p>
+                        <?php 
+                        $total_responses = isset($quiz['deleted_user_responses']) ? 
+                            count($quiz['responses']) + count($quiz['deleted_user_responses']) : 
+                            count($quiz['responses']); 
+                        ?>
+                        <p>Nombre total de participants : <?php echo $total_responses; ?></p>
+                        <p>Participants actuels : <?php echo count($quiz['responses']); ?></p>
                         <?php
                         $total_scores = array_column($responses, 'total_score');
-                        $max_score = $responses[0]['max_score'];
-                        $average_score = array_sum($total_scores) / count($total_scores);
+                        $max_score = $responses[0]['max_score'] ?? 0;
+                        $average_score = !empty($total_scores) ? array_sum($total_scores) / count($total_scores) : 0;
                         ?>
                         <p>Score moyen : <?php echo round($average_score, 2); ?>/<?php echo $max_score; ?> (<?php echo round(($average_score / $max_score) * 100); ?>%)</p>
                     </div>

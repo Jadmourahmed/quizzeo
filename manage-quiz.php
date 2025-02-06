@@ -28,16 +28,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // Vérifier si l'utilisateur a le droit de gérer ce quiz
             if ($_SESSION['role'] === 'utilisateur' && $action === 'clear_responses') {
-                // Pour les utilisateurs simples, supprimer uniquement leurs propres réponses
-                $new_responses = array_filter($quiz['responses'], function($response) {
-                    return $response['user_id'] !== $_SESSION['user_id'];
-                });
-                $quiz['responses'] = array_values($new_responses);
-                
-                if (file_put_contents($quiz_file, json_encode($quiz))) {
-                    $success = "Vos réponses ont été supprimées avec succès";
+                // Vérification supplémentaire des données
+                if (!isset($quiz['creator_id']) || !isset($quiz['responses'])) {
+                    $error = "Impossible de supprimer les réponses. Données du quiz invalides.";
                 } else {
-                    $error = "Erreur lors de la suppression de vos réponses";
+                    // Initialiser le tableau des réponses supprimées par l'utilisateur si non existant
+                    if (!isset($quiz['deleted_user_responses'])) {
+                        $quiz['deleted_user_responses'] = [];
+                    }
+
+                    // Trouver et déplacer les réponses de l'utilisateur
+                    $remaining_responses = [];
+                    foreach ($quiz['responses'] as $response) {
+                        if ($response['user_id'] === $_SESSION['user_id']) {
+                            // Ajouter la réponse aux réponses supprimées
+                            $quiz['deleted_user_responses'][] = $response;
+                        } else {
+                            // Conserver les réponses des autres utilisateurs
+                            $remaining_responses[] = $response;
+                        }
+                    }
+
+                    // Mettre à jour les réponses du quiz
+                    $quiz['responses'] = $remaining_responses;
+                    
+                    if (file_put_contents($quiz_file, json_encode($quiz))) {
+                        $success = "Vos réponses ont été supprimées de votre compte";
+                    } else {
+                        $error = "Erreur lors de la suppression de vos réponses";
+                    }
                 }
             } elseif (in_array($_SESSION['role'], ['ecole', 'entreprise']) && $action === 'delete_quiz') {
                 // Pour les écoles et entreprises, vérifier si c'est leur quiz

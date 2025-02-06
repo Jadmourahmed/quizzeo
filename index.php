@@ -192,7 +192,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['quiz_link'])) {
                                         <?php endif; ?>
                                     <?php else: ?>
                                         <div class="quiz-stats">
-                                            <p>Nombre de réponses : <?php echo count($quiz['responses'] ?? []); ?></p>
+                                            <?php 
+                                            $total_responses = count($quiz['responses'] ?? []);
+                                            if (isset($quiz['deleted_user_responses'])) {
+                                                $total_responses += count($quiz['deleted_user_responses']);
+                                            }
+                                            ?>
+                                            <p>Nombre de réponses : <?php echo $total_responses; ?></p>
                                         </div>
                                         <div class="quiz-actions">
                                             <a href="/projetweb_php/quiz-results.php?id=<?php echo $quiz['id']; ?>" class="btn btn-secondary">

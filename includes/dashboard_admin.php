@@ -98,12 +98,10 @@ foreach ($quiz_files as $file) {
 
 <script>
 function toggleUserStatus(userId) {
-    // TODO: Implement AJAX call to toggle user status
     alert('Fonctionnalité en cours de développement');
 }
 
 function toggleQuizStatus(quizId) {
-    // TODO: Implement AJAX call to toggle quiz status
     alert('Fonctionnalité en cours de développement');
 }
 </script>

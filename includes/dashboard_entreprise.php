@@ -45,7 +45,6 @@ $quizzes = getUserQuizzes($_SESSION['user_id']);
 <script>
 function terminerQuiz(quizId) {
     if (confirm('Êtes-vous sûr de vouloir terminer ce quiz ? Les participants ne pourront plus y répondre.')) {
-        // TODO: Implement AJAX call to end quiz
         alert('Fonctionnalité en cours de développement');
     }
 }

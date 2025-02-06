@@ -72,7 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         if (empty($error)) {
             // Créer le quiz
-            error_log("Show right answers: " . (isset($_POST['show_right_answers']) ? 'Yes' : 'No'));
             $quiz_data = [
                 'id' => uniqid(),
                 'title' => $title,
